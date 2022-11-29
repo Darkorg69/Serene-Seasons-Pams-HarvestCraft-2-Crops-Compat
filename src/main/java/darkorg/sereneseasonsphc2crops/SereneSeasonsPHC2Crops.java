@@ -1,4 +1,4 @@
-package darkorg.sereneseasonsphc2;
+package darkorg.sereneseasonsphc2crops;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
