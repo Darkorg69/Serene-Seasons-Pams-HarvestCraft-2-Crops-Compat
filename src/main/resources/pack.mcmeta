@@ -1,8 +1,6 @@
 {
   "pack": {
     "description": "Serene Seasons - Pam's HarvestCraft 2: Crops Compat Mod Resources",
-    "pack_format": 9,
-    "forge:resource_pack_format": 8,
-    "forge:data_pack_format": 9
+    "pack_format": 8
   }
 }
