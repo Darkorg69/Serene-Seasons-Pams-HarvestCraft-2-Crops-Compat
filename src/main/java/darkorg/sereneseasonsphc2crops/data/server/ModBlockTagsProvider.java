@@ -1,20 +1,24 @@
 package darkorg.sereneseasonsphc2crops.data.server;
 
 import darkorg.sereneseasonsphc2crops.SereneSeasonsPHC2Crops;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import sereneseasons.init.ModTags;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.pam.pamhc2crops.setup.BlockRegistration.*;
 
 public class ModBlockTagsProvider extends BlockTagsProvider {
-    public ModBlockTagsProvider(DataGenerator pDataGenerator, ExistingFileHelper pExistingFileHelper) {
-        super(pDataGenerator, SereneSeasonsPHC2Crops.MOD_ID, pExistingFileHelper);
+    public ModBlockTagsProvider(PackOutput pPackOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, ExistingFileHelper pExistingFileHelper) {
+        super(pPackOutput, pLookupProvider, SereneSeasonsPHC2Crops.MOD_ID, pExistingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(@NotNull HolderLookup.Provider pLookupProvider) {
         tag(ModTags.Blocks.SPRING_CROPS).add(
                 pamaloecrop.get(),
                 pamasparaguscrop.get(),
@@ -149,7 +153,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 pamtealeafcrop.get(),
                 pamtomatillocrop.get(),
                 pamwhitemushroomcrop.get(),
-                pamwintersquashcrop.get());
+                pamwintersquashcrop.get()
+        );
 
         //tag(ModTags.Blocks.WINTER_CROPS).add();
     }

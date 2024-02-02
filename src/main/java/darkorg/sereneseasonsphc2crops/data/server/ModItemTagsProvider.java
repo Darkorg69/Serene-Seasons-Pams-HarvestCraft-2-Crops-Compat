@@ -1,21 +1,25 @@
 package darkorg.sereneseasonsphc2crops.data.server;
 
 import darkorg.sereneseasonsphc2crops.SereneSeasonsPHC2Crops;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import sereneseasons.init.ModTags;
+
+import java.util.concurrent.CompletableFuture;
 
 import static com.pam.pamhc2crops.setup.ItemRegistration.*;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
-    public ModItemTagsProvider(DataGenerator pDataGenerator, BlockTagsProvider pBlockTagsProvider, ExistingFileHelper pExistingFileHelper) {
-        super(pDataGenerator, pBlockTagsProvider, SereneSeasonsPHC2Crops.MOD_ID, pExistingFileHelper);
+    public ModItemTagsProvider(PackOutput pPackOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagLookup<Block>> pBlockTagLookupProvider, ExistingFileHelper pExistingFileHelper) {
+        super(pPackOutput, pLookupProvider, pBlockTagLookupProvider, SereneSeasonsPHC2Crops.MOD_ID, pExistingFileHelper);
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.@NotNull Provider pLookupProvider) {
         tag(ModTags.Items.SPRING_CROPS).add(
                 aloeitem.get(),
                 aloeseeditem.get(),
