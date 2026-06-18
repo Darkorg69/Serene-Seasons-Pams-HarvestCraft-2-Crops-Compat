@@ -3,8 +3,8 @@ package darkorg.sereneseasonsphc2crops.data.server;
 import darkorg.sereneseasonsphc2crops.SereneSeasonsPHC2Crops;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import sereneseasons.init.ModTags;
 

@@ -1,0 +1,45 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+issueTrackerURL="https://github.com/darkorg69/serene-seasons-pams-harvestcraft-2-crops-compat/issues"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/serene-seasons-pams-harvestcraft-2-crops-compat"
+logoFile="sereneseasonsphc2crops.png"
+credits="Thanks for this mod goes to Java and the NeoForge Team."
+authors="Darkorg"
+description='''Grow your crops in their respective seasons!'''
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="sereneseasons"
+    type="required"
+    # TODO: VERIFY this version range matches the NeoForge 1.21.1 Serene Seasons version
+    versionRange="[1.21.1-10.1.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="pamhc2crops"
+    type="required"
+    # TODO: VERIFY this version range matches the NeoForge 1.21.1 Pam's HarvestCraft 2 Crops version
+    versionRange="[1.21.1-1.0.0,)"
+    ordering="NONE"
+    side="BOTH"

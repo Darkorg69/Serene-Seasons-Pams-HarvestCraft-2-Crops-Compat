@@ -5,7 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import sereneseasons.init.ModTags;
 
@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import static com.pam.pamhc2crops.setup.ItemRegistration.*;
 
 public class ModItemTagsProvider extends ItemTagsProvider {
+    // TODO: VERIFY constructor signature - TagLookup changed to TagsProvider.TagLookup in 1.21.1
     public ModItemTagsProvider(PackOutput pPackOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, CompletableFuture<TagLookup<Block>> pBlockTagLookupProvider, ExistingFileHelper pExistingFileHelper) {
         super(pPackOutput, pLookupProvider, pBlockTagLookupProvider, SereneSeasonsPHC2Crops.MOD_ID, pExistingFileHelper);
     }
