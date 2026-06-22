@@ -1,0 +1,62 @@
+plugins {
+    id 'idea'
+    id 'net.neoforged.gradle.userdev' version '7.0.97'
+}
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}-neoforge-${mod_version}"
+}
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+
+    client {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
+
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    }
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neo_version}"
+    compileOnly project(':Common')
+
+    implementation "curse.maven:sereneseasons-291874:${neoforge_sereneseasons_version}"
+    implementation "curse.maven:pamhc2crops-361385:${neoforge_pamhc2crops_version}"
+    implementation "curse.maven:glitchcore-955399:${neoforge_glitchcore_version}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+tasks.withType(Javadoc).configureEach {
+    source(project(":Common").sourceSets.main.allJava)
+}
+
+tasks.named("sourcesJar", Jar) {
+    from(project(":Common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+}
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}

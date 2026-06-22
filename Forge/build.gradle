@@ -1,0 +1,86 @@
+plugins {
+    id 'idea'
+    id 'net.minecraftforge.gradle' version '[6.0.43,6.2)'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+}
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}-forge-${mod_version}"
+}
+
+minecraft {
+    mappings channel: "parchment", version: "${parchment_version}-${minecraft_version}"
+
+    copyIdeResources = true
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Client'
+            mods {
+                modClientRun {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            taskName 'Server'
+            mods {
+                modServerRun {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            taskName 'Data'
+            mods {
+                modDataRun {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compileOnly project(':Common')
+
+    implementation fg.deobf("curse.maven:sereneseasons-291874:${forge_sereneseasons_version}")
+    implementation fg.deobf("curse.maven:pamhc2crops-361385:${forge_pamhc2crops_version}")
+    implementation fg.deobf("curse.maven:glitchcore-955399:${forge_glitchcore_version}")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+tasks.withType(Javadoc).configureEach {
+    source(project(":Common").sourceSets.main.allJava)
+}
+
+tasks.named("sourcesJar", Jar) {
+    from(project(":Common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+}
+
+jar.finalizedBy('reobfJar')
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}

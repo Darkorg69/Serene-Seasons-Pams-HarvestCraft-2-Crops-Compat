@@ -1,128 +1,73 @@
-buildscript {
+subprojects {
+    apply plugin: 'java'
+
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.withSourcesJar()
+    java.withJavadocJar()
+
+    jar {
+        from(rootProject.file("LICENSE")) {
+            rename { "${it}_${mod_id}" }
+        }
+        manifest {
+            attributes(['Specification-Title'     : mod_name,
+                        'Specification-Vendor'    : mod_authors,
+                        'Specification-Version'   : project.jar.archiveVersion,
+                        'Implementation-Title'    : project.name,
+                        'Implementation-Version'  : project.jar.archiveVersion,
+                        'Implementation-Vendor'   : mod_authors,
+                        'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                        'Timestamp'               : System.currentTimeMillis(),
+                        'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                        'Built-On-Minecraft'      : minecraft_version])
+        }
+    }
+
+    sourcesJar {
+        from(rootProject.file("LICENSE")) {
+            rename { "${it}_${mod_name}" }
+        }
+    }
+
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://maven.parchmentmc.org' }
-        maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven { url = "https://maven.blamejared.com/" }
+        maven { url = "https://www.cursemaven.com" }
     }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '[6.0.16,6.2)', changing: true
-        classpath 'org.parchmentmc:librarian:1.+'
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = 'UTF-8'
+        it.options.getRelease().set(17)
     }
-}
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-version = "${minecraft_version}-${mod_version}"
-group = "${mod_author}.${modId}"
-archivesBaseName = modId
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-minecraft {
-    mappings channel: 'parchment', version: mappings_version
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                modId {
-                    source sourceSets.main
-                }
-            }
+    processResources {
+        def properties = ["projectGroup"              : project.group,
+                          //Mod
+                          "mod_id"                    : mod_id,
+                          "mod_version"               : mod_version,
+                          "mod_name"                  : mod_name,
+                          //Minecraft
+                          "minecraft_version"         : minecraft_version,
+                          "minecraft_version_range"   : minecraft_version_range,
+                          //Common
+                          "mod_authors"               : mod_authors,
+                          "mod_license"               : mod_license,
+                          "mod_description"           : mod_description,
+                          //Forge
+                          "forge_version"             : forge_version,
+                          "forge_version_range"       : forge_version_range,
+                          "forge_loader_version_range": forge_loader_version_range,
+                          //NeoForge
+                          "neo_version"               : neo_version,
+                          "neo_version_range"         : neo_version_range,
+                          "neo_loader_version_range"  : neo_loader_version_range,
+                          //Parchment mappings
+                          "parchment_version"         : parchment_version]
+        filesMatching(['pack.mcmeta', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
+            expand(properties)
         }
 
-        data {
-            workingDirectory project.file('run')
-
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                modId {
-                    source sourceSets.main
-                }
-            }
-        }
+        inputs.properties(properties)
     }
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-repositories {
-    maven {
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-    }
-    maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
-    maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-}
-
-dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-
-    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
-    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
-
-    runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
-
-    implementation(fg.deobf("curse.maven:sereneseasons-291874:${sereneseasons_version}"))
-    implementation fg.deobf("curse.maven:pamhc2crops-361385:${pamhc2crops_version}")
-}
-
-mixin {
-    //add sourceSets.main, "mixins.${modId}.refmap.json"
-    //config "mixins.${modId}.json"
-    debug.verbose = false
-    debug.export = false
-}
-
-jar {
-    manifest {
-        attributes(["Specification-Title"     : mod_displayName,
-                    "Specification-Vendor"    : mod_author,
-                    "Specification-Version"   : "${minecraft_version}-${mod_version}",
-                    "Implementation-Title"    : project.name,
-                    "Implementation-Version"  : "${minecraft_version}-${mod_version}",
-                    "Implementation-Vendor"   : mod_author,
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")])
-    }
-}
-
-jar.finalizedBy('reobfJar')
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-// Merge the resources and classes into the same directory.
-// This is done because java expects modules to be in a single directory.
-// And if we have it in multiple we have to do performance intensive hacks like having the UnionFileSystem
-// This will eventually be migrated to ForgeGradle so modders don't need to manually do it. But that is later.
-sourceSets.each {
-    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
-    it.output.resourcesDir = dir
-    it.java.destinationDirectory = dir
 }
