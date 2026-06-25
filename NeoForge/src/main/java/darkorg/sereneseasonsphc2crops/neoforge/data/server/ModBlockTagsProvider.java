@@ -67,7 +67,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 pamlotuscrop.get(), pamnopalescrop.get(), pamoatscrop.get(),
                 pamonioncrop.get(), pampeascrop.get(), pamquinoacrop.get(),
                 pamrutabagacrop.get(), pamryecrop.get(), pamspinachcrop.get(),
-                pamsweetpotatocrop.get(), pamtealeafcrop.get(), pamtomatillocrop.get(),
-                pamwhitemushroomcrop.get(), pamwintersquashcrop.get());
+                pamsunchokecrop.get(), pamsweetpotatocrop.get(), pamtealeafcrop.get(),
+                pamtomatillocrop.get(), pamwhitemushroomcrop.get(), pamwintersquashcrop.get());
     }
 }

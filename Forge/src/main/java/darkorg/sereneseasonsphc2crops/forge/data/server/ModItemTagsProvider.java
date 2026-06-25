@@ -95,6 +95,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 rutabagaitem.get(), rutabagaseeditem.get(),
                 ryeitem.get(), ryeseeditem.get(),
                 spinachitem.get(), spinachseeditem.get(),
+                sunchokeitem.get(), sunchokeseeditem.get(),
                 sweetpotatoitem.get(), sweetpotatoseeditem.get(),
                 tealeafitem.get(), tealeafseeditem.get(),
                 tomatilloitem.get(), tomatilloseeditem.get(),
