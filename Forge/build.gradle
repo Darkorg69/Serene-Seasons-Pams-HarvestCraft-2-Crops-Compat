@@ -56,9 +56,10 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(':Common')
 
-    implementation fg.deobf("curse.maven:sereneseasons-291874:${forge_sereneseasons_version}")
-    implementation fg.deobf("curse.maven:pamhc2crops-361385:${forge_pamhc2crops_version}")
-    implementation fg.deobf("curse.maven:glitchcore-955399:${forge_glitchcore_version}")
+    // Forge dependencies disabled - no Pam's HC2 Crops for Forge 1.21
+    //implementation fg.deobf("curse.maven:sereneseasons-291874:${forge_sereneseasons_version}")
+    //implementation fg.deobf("curse.maven:pamhc2crops-361385:${forge_pamhc2crops_version}")
+    //implementation fg.deobf("curse.maven:glitchcore-955399:${forge_glitchcore_version}")
 }
 
 tasks.withType(JavaCompile).configureEach {

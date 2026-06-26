@@ -1,7 +1,7 @@
 subprojects {
     apply plugin: 'java'
 
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
     java.withSourcesJar()
     java.withJavadocJar()
 
@@ -38,7 +38,7 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
-        it.options.getRelease().set(17)
+        it.options.getRelease().set(21)
     }
 
     processResources {
@@ -55,9 +55,9 @@ subprojects {
                           "mod_license"               : mod_license,
                           "mod_description"           : mod_description,
                           //Forge
-                          "forge_version"             : forge_version,
-                          "forge_version_range"       : forge_version_range,
-                          "forge_loader_version_range": forge_loader_version_range,
+                          "forge_version"             : project.findProperty('forge_version') ?: '',
+                          "forge_version_range"       : project.findProperty('forge_version_range') ?: '',
+                          "forge_loader_version_range": project.findProperty('forge_loader_version_range') ?: '',
                           //NeoForge
                           "neo_version"               : neo_version,
                           "neo_version_range"         : neo_version_range,

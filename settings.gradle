@@ -10,4 +10,5 @@ pluginManagement {
 }
 
 rootProject.name = "SereneSeasonsPHC2Crops"
-include("Common", "Forge", "NeoForge")
+include("Common", "NeoForge")
+//include("Common", "Forge", "NeoForge")
