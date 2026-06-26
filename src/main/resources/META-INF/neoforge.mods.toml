@@ -29,17 +29,22 @@ description='''Grow your crops in their respective seasons!'''
     side="BOTH"
 
 [[dependencies.${mod_id}]]
+    modId="glitchcore"
+    type="required"
+    versionRange="[2.1.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
     modId="sereneseasons"
     type="required"
-    # TODO: VERIFY this version range matches the NeoForge 1.21.1 Serene Seasons version
-    versionRange="[1.21.1-10.1.0.0,)"
+    versionRange="[10.1.0.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="pamhc2crops"
     type="required"
-    # TODO: VERIFY this version range matches the NeoForge 1.21.1 Pam's HarvestCraft 2 Crops version
-    versionRange="[1.21.1-1.0.0,)"
+    versionRange="[1.0.0,)"
     ordering="NONE"
     side="BOTH"

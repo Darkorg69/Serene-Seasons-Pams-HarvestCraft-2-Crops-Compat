@@ -59,7 +59,7 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    // TODO: VERIFY these CurseForge file IDs are for the NeoForge 1.21.1 versions of the mods
+    implementation "curse.maven:glitchcore-955399:${glitchcore_version}"
     implementation "curse.maven:sereneseasons-291874:${sereneseasons_version}"
     implementation "curse.maven:pamhc2crops-361385:${pamhc2crops_version}"
 }
